@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
 from .models import (
     Category, 
     Product,
@@ -9,13 +12,11 @@ from .models import (
 from .serializer import (
     ProductSerializer, 
     CategorySerializer, 
-    Product_photoSerializer, Member_photoSerializer
+    Product_photoSerializer, 
+    Member_photoSerializer
 )
-from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
 
-# api of products
+# api for products
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -64,14 +65,18 @@ def get_category_by_id(request, slug):
     serializer = CategorySerializer(category)
     return Response({"product":serializer.data})
 
-
-
-# api ofMembers
+# api of Members
 @api_view(['POST'])
-def create_new_product(request):
-    serializer = ProductSerializer(data=request.data)
+def add_new_member(request):
+    serializer = Member_photoSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response({"satus":"ok","response": "Новый продукт успешно добавлен"})
-    print(serializer.data)
+        return Response({"satus":"ok","response": "Новый участник успешно добавлен"})
     return Response({"status":"error","response":"Ошибка при добавление нового продукта"})
+
+
+@api_view(['GET'])
+def get_members(request):
+    members = Members.objects.all()
+    serializer = Member_photoSerializer(members)
+    return Response({"members":serializer.data})
