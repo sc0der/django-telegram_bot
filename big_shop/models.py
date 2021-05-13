@@ -76,3 +76,14 @@ class Product_photo(models.Model):
     class Meta:
         verbose_name = ('Фотография продукта')
         verbose_name_plural = ('Фотографии продуктов')
+
+class Members(models.Model):
+    memberID = models.CharField(max_length=150, verbose_name="ID-участника")
+    mName = models.CharField(max_length=50, verbose_name="USERNAME-участника")
+
+    def __str__(self):
+        return self.mName
+
+    class Meta:
+        verbose_name = ('Участник')
+        verbose_name_plural = ('Участники')

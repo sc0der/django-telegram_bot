@@ -1,7 +1,16 @@
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
-from .models import Category, Product, Product_photo
-from .serializer import ProductSerializer, CategorySerializer, Product_photoSerializer
+from .models import (
+    Category, 
+    Product,
+    Product_photo, 
+    Members
+)
+from .serializer import (
+    ProductSerializer, 
+    CategorySerializer, 
+    Product_photoSerializer, Member_photoSerializer
+)
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -54,3 +63,15 @@ def get_category_by_id(request, slug):
     category = Category.objects.get(category_slug=slug)
     serializer = CategorySerializer(category)
     return Response({"product":serializer.data})
+
+
+
+# api ofMembers
+@api_view(['POST'])
+def create_new_product(request):
+    serializer = ProductSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"satus":"ok","response": "Новый продукт успешно добавлен"})
+    print(serializer.data)
+    return Response({"status":"error","response":"Ошибка при добавление нового продукта"})

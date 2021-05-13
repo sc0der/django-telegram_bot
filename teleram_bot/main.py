@@ -6,9 +6,9 @@ class Category(object):
         self.name = name
         self.slug = slug
         self.image = image
-        return Category(self.name, self.slug, self.image)
 
 class FetchCategory(object):
+    
     def __init__(self, url):
         self.url = url
 
@@ -24,27 +24,11 @@ class FetchCategory(object):
                     image=category['category_image'],
                     )
                 )
-        print(len(category_list))
         return category_list
 
     def test(self, value):
         print(value)
 
 if __name__ == "__main__":
-    testFetch = FetchCategory("")
-    testFetch.test(LINKS["all_categories"])
-
-
-    
-
-
-        
-# def fetch_otus_json_data():
-#     products = []
-#     url = 'http://localhost:8000/product/all'
-#     drf_response = requests.get(url=url)
-#     resp = drf_response.json()
-#     for prod in resp["products"]:
-#         products.append({"product":[ prod["product_name"], "http://localhost:8000"+str(prod["image"])]})
-#     print(len(products))
-#     return products
+    testFetch = FetchCategory(LINKS['category_list'])
+    testFetch.get_category_list()
