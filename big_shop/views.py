@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
-from .models import Category, Product
-from .serializer import ProductSerializer, CategorySerializer
+from .models import Category, Product, Product_photo
+from .serializer import ProductSerializer, CategorySerializer, Product_photoSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -33,11 +33,16 @@ def get_product_by_id(request, slug):
 @api_view(['GET'])
 def get_product_by_category_id(request, category_id):
     product = Product.objects.filter(category_id=category_id)
-    serializer = ProductSerializer(product, many=True)
+    serializer = ProductSerializer(product, many=True, )
     return Response({"category":serializer.data})
 
-# api of categories
+@api_view(['GET'])
+def get_product_image(request, product_slug):
+    product_image = Product_photo.objects.filter(photo_slug = product_slug)
+    photo_srzlr = Product_photoSerializer(product_image, many=True)
+    return Response({"image: ": photo_srzlr.data})
 
+# api of categories
 @api_view(['GET'])
 def get_all_categories(request):
     categories = Category.objects.all()

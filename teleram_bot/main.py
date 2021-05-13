@@ -1,5 +1,12 @@
 import requests
+host = "http://localhost:8000/"
 
+class FetchCategory(object):
+    def __init__(self, url):
+        self.url = url
+
+    def get_category_list(self, category_list=[]):
+        pass
 
 
 def fetch_otus_json_data():
