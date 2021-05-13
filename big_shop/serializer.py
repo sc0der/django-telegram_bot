@@ -19,7 +19,7 @@ class Product_photoSerializer(serializers.ModelSerializer):
         model = Product_photo
         fields = '__all__'
 
-class Member_photoSerializer(serializers.ModelSerializer):
+class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Members
         fields = '__all__'

@@ -8,7 +8,6 @@ class Category(object):
         self.image = image
 
 class FetchCategory(object):
-    
     def __init__(self, url):
         self.url = url
 

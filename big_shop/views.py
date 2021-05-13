@@ -13,7 +13,7 @@ from .serializer import (
     ProductSerializer, 
     CategorySerializer, 
     Product_photoSerializer, 
-    Member_photoSerializer
+    MemberSerializer
 )
 
 # api for products
@@ -66,17 +66,40 @@ def get_category_by_id(request, slug):
     return Response({"product":serializer.data})
 
 # api of Members
+
+# add new member if not exists
 @api_view(['POST'])
 def add_new_member(request):
-    serializer = Member_photoSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response({"satus":"ok","response": "Новый участник успешно добавлен"})
+    member = Members.objects.filter(memberID=request.data["memberID"])
+    if member.exists():
+        return Response(
+            {
+                "satus":"Registered",
+                "response": "Такой участник уже существует"
+            }
+        )
+    else:
+        serializer = MemberSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {
+                    "satus":"isRegistered",
+                    "response": "Новый участник успешно добавлен"
+                }
+            )
     return Response({"status":"error","response":"Ошибка при добавление нового продукта"})
 
 
+# get  all members
 @api_view(['GET'])
 def get_members(request):
     members = Members.objects.all()
-    serializer = Member_photoSerializer(members)
+    serializer = MemberSerializer(members, many=True)
     return Response({"members":serializer.data})
+
+# @api_view(['GET'])
+# def get_members(request, userID):
+#     members = Members.objects.filter(memberID=userID)
+#     if members.exists():
+#         return Response({"members":serializer.data})
