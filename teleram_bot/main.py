@@ -7,6 +7,16 @@ class Category(object):
         self.slug = slug
         self.image = image
 
+class Product(object):
+    def __init__(self, name, slug, price, category):
+        self.name = name,
+        self.slug = slug
+        self.price = price
+        self.category = category
+
+
+        
+
 class FetchCategory(object):
     def __init__(self, url):
         self.url = url
@@ -25,8 +35,9 @@ class FetchCategory(object):
                 )
         return category_list
 
-    def test(self, value):
-        print(value)
+    def get_products_to_category(self, value):
+        product_list = []
+        
 
 if __name__ == "__main__":
     testFetch = FetchCategory(LINKS['category_list'])

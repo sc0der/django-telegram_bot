@@ -11,7 +11,7 @@ dp = Dispatcher(bot)
 
 
 @dp.message_handler(commands=['start', 'help'])
-async def send_welcome(message: types.Message, page=1):
+async def send_welcome(message: types.Message, page=2):
     paginator = InlineKeyboardPaginator(
         len(character_pages),
         current_page=page,
@@ -25,7 +25,7 @@ async def send_welcome(message: types.Message, page=1):
         reply_markup=paginator.markup,
         parse_mode='Markdown'
     )
-    name = message.from_user.id
+    name = message.from_user.is_bot
     print("user_data: ", name)
     await message.answer(name)
     # for item in fetch_otus_json_data():

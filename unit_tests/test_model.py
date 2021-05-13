@@ -6,7 +6,7 @@ class CategoryTestClass(TestCase):
     def setUpTestData(cls):
         Category.objects.create(category_name='Компьютеры')
 
-    def test_category_name(self):
+    def test_categories(self):
         print("----- testing category name -----")
         category = Category.objects.get(id=1)
         field_label = category._meta.get_field('category_name').verbose_name
@@ -24,3 +24,4 @@ class MemberTestClass(TestCase):
         field_label2 = member._meta.get_field('mName').verbose_name
         self.assertEquals(field_label,'ID-участника')
         self.assertEquals(field_label2,'USERNAME-участника')
+

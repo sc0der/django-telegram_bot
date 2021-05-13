@@ -26,6 +26,7 @@ urlpatterns = [
     path('product/<slug>', get_product_by_id),
     path('category/all', get_all_categories),
     path('category/<slug>', get_category_by_id),
+    path('products/category/<category_slug>', get_product_by_category_id),
     path('member/add', add_new_member),
     path('member/all', get_members),
 ]

@@ -41,10 +41,12 @@ def get_product_by_id(request, slug):
     return Response({"product":serializer.data})
 
 @api_view(['GET'])
-def get_product_by_category_id(request, category_id):
-    product = Product.objects.filter(category_id=category_id)
-    serializer = ProductSerializer(product, many=True, )
-    return Response({"category":serializer.data})
+def get_product_by_category_id(request, category_slug):
+    category = Category.objects.filter(category_slug = category_slug)
+    for product in category:
+        product_list = product.products.all()
+        serializer = ProductSerializer(product_list, many=True, )
+    return Response({"products_by_category":serializer.data})
 
 @api_view(['GET'])
 def get_product_image(request, product_slug):
@@ -97,9 +99,3 @@ def get_members(request):
     members = Members.objects.all()
     serializer = MemberSerializer(members, many=True)
     return Response({"members":serializer.data})
-
-# @api_view(['GET'])
-# def get_members(request, userID):
-#     members = Members.objects.filter(memberID=userID)
-#     if members.exists():
-#         return Response({"members":serializer.data})

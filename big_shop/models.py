@@ -36,7 +36,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100, verbose_name="Продукт")
-    category_id = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, verbose_name="Категория")
+    category_id = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name="products", null=True, verbose_name="Категория")
     price = models.FloatField(default=1.0, verbose_name="Цена")
     created_date = models.DateField(auto_now=True, verbose_name="Дата")
     product_slug = models.SlugField(
@@ -50,7 +50,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
-
+        
     class Meta:
         verbose_name = ('Продукт')
         verbose_name_plural = ('Продукты')
@@ -80,6 +80,7 @@ class Product_photo(models.Model):
 class Members(models.Model):
     memberID = models.CharField(max_length=150, verbose_name="ID-участника")
     mName = models.CharField(max_length=50, verbose_name="USERNAME-участника")
+    # banned = models.BooleanField(default=False, verbose_name="Участник забанен")
 
     def __str__(self):
         return self.mName
@@ -87,3 +88,4 @@ class Members(models.Model):
     class Meta:
         verbose_name = ('Участник')
         verbose_name_plural = ('Участники')
+
