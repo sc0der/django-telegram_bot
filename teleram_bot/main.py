@@ -90,6 +90,16 @@ class FetchProduct(object):
             category = product['category_id'], 
         )
 
+    def get_photo_by_id(self, product_slug):
+        image_list = []
+        response = requests.get(url=self.urls['product_images']+product_slug)
+        result = response.json()
+        print(result)
+        for image in result["images"]: 
+            image_list.append(image)
+        print(len(image_list))
+        return image_list
+
 
 class MemberObject(object):
     def __init__(self, username, id):
@@ -119,15 +129,13 @@ class Member(object):
             result = response.json()
             return result
 
-
-
-
 if __name__ == "__main__":
     testFetchCategory = FetchCategory(category_urls)
     categ_list = testFetchCategory.get_category_list()
     testFetchCategory.get_products_to_category(categ_list[0].slug)
-
     testProduct = FetchProduct(products_urls)
     pr1 = testProduct.get_product_list()
-    print(testProduct.get_product_by_id(pr1[0].slug).slug)
+    pr2 = testProduct.get_photo_by_id(pr1[0].slug)
+    print(pr2[0]['photo'])
+
 

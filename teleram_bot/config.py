@@ -7,6 +7,7 @@ products_urls = {
     "add_product": host + 'product/add',
     "product_list": host + 'product/all',
     "product":host + 'product/' , # + <product_slug>
+    "product_images": host + "product/image/"
 }
 
 members_urls = {

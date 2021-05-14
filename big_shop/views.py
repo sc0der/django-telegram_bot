@@ -16,6 +16,7 @@ from .serializer import (
     MemberSerializer
 )
 
+
 # api for products
 
 @api_view(['POST'])
@@ -38,7 +39,7 @@ def get_all_products(request):
 def get_product_by_id(request, slug):
     product = Product.objects.get(product_slug=slug)
     serializer = ProductSerializer(product)
-    return Response({"product":serializer.data})
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def get_product_by_category_id(request, category_slug):
@@ -52,7 +53,7 @@ def get_product_by_category_id(request, category_slug):
 def get_product_image(request, product_slug):
     product_image = Product_photo.objects.filter(photo_slug = product_slug)
     photo_srzlr = Product_photoSerializer(product_image, many=True)
-    return Response({"image: ": photo_srzlr.data})
+    return Response({"images": photo_srzlr.data})
 
 # api of categories
 @api_view(['GET'])
@@ -65,7 +66,7 @@ def get_all_categories(request):
 def get_category_by_id(request, slug):
     category = Category.objects.get(category_slug=slug)
     serializer = CategorySerializer(category)
-    return Response({"product":serializer.data})
+    return Response(serializer.data)
 
 # api of Members
 
@@ -90,7 +91,13 @@ def add_new_member(request):
                     "response": "Новый участник успешно добавлен"
                 }
             )
-    return Response({"status":"error","response":"Ошибка при добавление нового продукта"})
+        
+    return Response(
+        {
+            "status":"error",
+            "response":serializer.data
+        }
+    )
 
 
 # get  all members
