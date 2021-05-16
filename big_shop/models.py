@@ -89,3 +89,18 @@ class Members(models.Model):
         verbose_name = ('Участник')
         verbose_name_plural = ('Участники')
 
+class Cart(models.Model):
+    product = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
+    count = models.IntegerField()
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.product.product_name
+
+class Order(models.Model):
+    order = models.CharField(max_length=100)
+    cart = models.ForeignKey(Cart, on_delete= models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        self.order = self.cart.product.product_name
+        super().save(*args, **kwargs)
