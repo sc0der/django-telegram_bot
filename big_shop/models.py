@@ -119,7 +119,11 @@ class Cart(models.Model):
 class Order(models.Model):
     order = models.CharField(max_length=100)
     cart = models.ForeignKey(Cart, on_delete= models.CASCADE)
-    
+    customer = models.ForeignKey(Members, on_delete=models.SET_NULL, null=True)
+
     def save(self, *args, **kwargs):
-        self.order = self.cart.product.product_name
+        self.order = self.customer.memberID
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.order
