@@ -89,18 +89,37 @@ class Members(models.Model):
         verbose_name = ('Участник')
         verbose_name_plural = ('Участники')
 
-class Cart(models.Model):
+class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
-    count = models.IntegerField()
-    status = models.BooleanField(default=False)
+    qty = models.PositiveIntegerField(default=1)
+    item_total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+
+    def __unicode__(self):
+        return "cart item for product {0}".format(self.product.product_name)
 
     def __str__(self):
         return self.product.product_name
 
+    class Meta:
+        verbose_name = ('Запрос')
+        verbose_name_plural = ('Запросы')
+
+class Cart(models.Model):
+    items = models.ManyToManyField(CartItem)
+    item_total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+    
+    def __unicode__(self):
+        return str(self.id)
+
+    class Meta:
+        verbose_name = ('Корзина')
+        verbose_name_plural = ('Корзина')
+
+
 class Order(models.Model):
     order = models.CharField(max_length=100)
     cart = models.ForeignKey(Cart, on_delete= models.CASCADE)
-
+    
     def save(self, *args, **kwargs):
         self.order = self.cart.product.product_name
         super().save(*args, **kwargs)
