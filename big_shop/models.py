@@ -117,13 +117,17 @@ class Cart(models.Model):
 
 
 class Order(models.Model):
-    order = models.CharField(max_length=100)
-    cart = models.ForeignKey(Cart, on_delete= models.CASCADE)
-    customer = models.ForeignKey(Members, on_delete=models.SET_NULL, null=True)
+    order = models.CharField(max_length=100, verbose_name="Пользователь")
+    cart = models.ForeignKey(Cart, on_delete= models.CASCADE, verbose_name="Заказ")
+    customer = models.ForeignKey(Members, on_delete=models.SET_NULL, null=True, verbose_name="Клиент")
 
     def save(self, *args, **kwargs):
-        self.order = self.customer.memberID
+        self.order = "User - " + self.customer.memberID
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.order
+
+    class Meta:
+        verbose_name = ('Заказ')
+        verbose_name_plural = ('Заказы')
