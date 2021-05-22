@@ -56,9 +56,9 @@ class FetchCategory(object):
         response = requests.get(url=self.urls['category']+value)
         category = response.json()
         return Category(
-            name=category['category_name'],
-            slug=category['category_slug'],
-            image=category['category_image'],
+            name = category['category_name'],
+            slug = category['category_slug'],
+            image = category['category_image'],
         )
 
 class FetchProduct(object):
@@ -113,7 +113,7 @@ class Member(object):
 
     def add_new_member(self):
         if Middleware(self.message).is_bot():
-            return "you are a bot. You can not to join"
+            return "you are a bot. You can not join this channel"
             print("this is bot")
         else:
             print("username: ", self.message.from_user.first_name)
