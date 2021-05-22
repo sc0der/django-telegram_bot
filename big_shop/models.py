@@ -92,7 +92,7 @@ class Members(models.Model):
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
     qty = models.PositiveIntegerField(default=1)
-    item_total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+    user = models.ForeignKey(Members, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return "cart item for product {0}".format(self.product.product_name)
@@ -107,9 +107,9 @@ class CartItem(models.Model):
 class Cart(models.Model):
     items = models.ManyToManyField(CartItem)
     item_total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
-    
-    def __unicode__(self):
-        return str(self.id)
+
+    def __str__(self):
+        return str(self.item_total) + " - tjs"
 
     class Meta:
         verbose_name = ('Корзина')

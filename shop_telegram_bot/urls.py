@@ -12,7 +12,13 @@ from big_shop.views import (
     get_category_by_id, 
     get_product_image,
     add_new_member, 
-    get_members
+    get_members, 
+    get_cart_item,
+    get_order_item,
+    get_cart_items,
+    post_cart,
+    post_cart_item,
+    post_order
 )
 
 router = routers.DefaultRouter()
@@ -29,6 +35,14 @@ urlpatterns = [
     path('products/category/<category_slug>', get_product_by_category_id),
     path('member/add', add_new_member),
     path('member/all', get_members),
+
+    path('order/add', post_order),
+    path('order/all', get_order_item),
+    path('cart/add', post_cart),
+    path('cart_items/all', get_cart_items),
+    path('cart_item/add', post_cart_item),
+    path('cart_item/<cItem_id>', get_cart_item),
+
 ]
 
 urlpatterns	+=	static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

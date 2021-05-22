@@ -1,6 +1,15 @@
 from rest_framework import serializers
-from .models import Category, Product, Product_photo, Members
+from .models import (
+    Category, 
+    Product, 
+    Product_photo, 
+    Members,
+    Cart, 
+    CartItem, 
+    Order
+)
 
+# Сериализаторы 
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,4 +31,19 @@ class Product_photoSerializer(serializers.ModelSerializer):
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Members
+        fields = '__all__'
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = '__all__'
+
+class CartItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartItem
+        fields = '__all__'
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
         fields = '__all__'

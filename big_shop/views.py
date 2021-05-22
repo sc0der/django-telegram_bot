@@ -7,13 +7,16 @@ from .models import (
     Category, 
     Product,
     Product_photo, 
-    Members
+    Members, Cart, CartItem, Order
 )
 from .serializer import (
     ProductSerializer, 
     CategorySerializer, 
     Product_photoSerializer, 
-    MemberSerializer
+    MemberSerializer, 
+    CartItemSerializer, 
+    CartSerializer, 
+    OrderSerializer
 )
 
 
@@ -99,10 +102,53 @@ def add_new_member(request):
         }
     )
 
-
 # get  all members
 @api_view(['GET'])
 def get_members(request):
     members = Members.objects.all()
     serializer = MemberSerializer(members, many=True)
     return Response({"members":serializer.data})
+
+
+# Работа с заказамы и корзинам
+@api_view(['POST'])
+def post_cart_item(request):
+    serlzr = CartItemSerializer(data=request.data)
+    if serlzr.is_valid():
+        serlzr.save()
+        return Response({"ok": "Успешно добавлен"})
+    return Response({"error": "Не удалос добавить в корзину"})
+
+@api_view(['GET'])
+def get_cart_item(request, cItem_id):
+    cartItem = CartItem.objects.get(id=cItem_id)
+    serlzr = CartItemSerializer(cartItem)
+    return Response({"cart_item": serlzr.data})
+
+@api_view(['POST'])
+def post_cart(request):
+    serlzr = CartSerializer(data=request.data)
+    if serlzr.is_valid():
+        serlzr.save()
+        return Response({"ok": "Успешно добавлен"})
+    return Response({"error": "Не удалос добавить"})
+
+@api_view(['GET'])
+def get_cart_items(request, userID):
+    cart = Cart.objects.all()
+    serlzr = CartSerializer(cart, many=True)
+    return Response({"cart": serlzr.data})
+
+@api_view(['POST'])
+def post_order(request):
+    serlzr = OrderSerializer(data=request.data)
+    if serlzr.is_valid():
+        serlzr.save()
+        return Response({"ok": "Ваш заказ успешно отправлен заказ"})
+    return Response({"error": "Не удалос отправить"})
+
+@api_view(['GET'])
+def get_order_item(request):
+    order = Order.objects.all()
+    serlzr = OrderSerializer(order, many=True)
+    return Response({"order": serlzr.data})
