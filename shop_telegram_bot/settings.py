@@ -12,6 +12,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # 'admin_shortcuts',
+    'vali',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,8 +60,12 @@ WSGI_APPLICATION = 'shop_telegram_bot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'big_shop', 
+        'USER': 'postgres', 
+        'PASSWORD': 'sc0der',
+        'HOST': '127.0.0.1', 
+        'PORT': '5432',
     }
 }
 
@@ -86,7 +92,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'tg'
 
 TIME_ZONE = 'UTC'
 
@@ -101,3 +107,58 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+VALI_CONFIG = {
+        'theme': 'default',
+        'dashboard': {
+            'name': 'Панель управление',
+            'url': '/vali/dashboard/',
+            'subtitle': 'Dashboard view with all statistics',
+            'site_name': "'Большой'- Бот",
+            'url_image_profile': 'https://avatars.githubusercontent.com/u/44986984?v=4'
+        },
+        # 'fieldset': {
+        #     'fields': ['user_permissions', 'permissions']
+        # },
+        # 'applist': {
+        #     'order': "registry", "group": False
+        # }
+    }  
+
+ADMIN_SHORTCUTS = [
+    {
+        'title': "'Большой' Интернет Магазин",
+        'shortcuts': [
+            {
+                'title': 'Заказы',
+                'url_name': 'admin:index',
+            },
+            {
+                'title': 'Files',
+                'url_name': 'admin:index',
+            },
+            {
+                'title': 'Contact forms',
+                'icon': 'columns',
+                'url_name': 'admin:index',
+                'count_new': '300',
+            },
+            {
+                'title': 'Products',
+                'url_name': 'admin:index',
+            },
+            {
+                'title': ('Orders'),
+                'url_name': 'admin:index',
+                'count_new': '12',
+            },
+        ]
+    },
+]
+
+ADMIN_SHORTCUTS_SETTINGS = {
+    'show_on_all_pages': False,
+    'hide_app_list': False,
+    'open_new_window': False,
+}

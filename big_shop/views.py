@@ -1,4 +1,7 @@
-from django.shortcuts import render
+
+from shop_telegram_bot import charts
+from shop_telegram_bot import counters
+from vali.views import ValiDashboardBase
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -19,6 +22,16 @@ from .serializer import (
     OrderSerializer
 )
 
+
+class ModelDashboardView(ValiDashboardBase):
+    template_name = 'dashboard.html'
+
+    list_counters = [
+        counters.MyModelCounter(),
+    ]   
+    list_charts = [
+        charts.ChartCounter(),
+    ]
 
 # api for products
 
@@ -152,3 +165,4 @@ def get_order_item(request):
     order = Order.objects.all()
     serlzr = OrderSerializer(order, many=True)
     return Response({"order": serlzr.data})
+

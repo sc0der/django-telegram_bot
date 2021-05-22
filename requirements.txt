@@ -1,0 +1,11 @@
+wheel
+django
+djangorestframework
+markdown
+django-filter
+pytils
+Pillow
+aiogram
+django-admin-vali
+django-admin-shortcuts
+psycopg2
