@@ -10,3 +10,4 @@ django-admin-vali
 django-admin-shortcuts
 psycopg2
 requests
+python-telegram-bot-pagination

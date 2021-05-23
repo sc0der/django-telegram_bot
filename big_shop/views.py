@@ -62,7 +62,7 @@ def get_product_by_category_id(request, category_slug):
     category = Category.objects.filter(category_slug = category_slug)
     for product in category:
         product_list = product.products.all()
-        serializer = ProductSerializer(product_list, many=True, )
+        serializer = ProductSerializer(product_list, many=True)
     return Response({"products_by_category":serializer.data})
 
 @api_view(['GET'])

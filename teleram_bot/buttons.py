@@ -5,6 +5,7 @@ from aiogram.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton
 )
+from telegram_bot_pagination import InlineKeyboardPaginator
 from main import FetchCategory
 from config import *
 
@@ -12,15 +13,15 @@ button1 = KeyboardButton('Категории')
 button2 = KeyboardButton('Подробно')
 button3 = KeyboardButton('Помощь')
 
-
-inline_btn_1 = InlineKeyboardButton('Первая кнопка!', callback_data='button1')
-inline_kb1 = InlineKeyboardMarkup().add(inline_btn_1)
-
-
+class MyPaginator(InlineKeyboardPaginator):
+    first_page_label = '<<'
+    previous_page_label = '<'
+    current_page_label = '-{}-'
+    next_page_label = '>'
+    last_page_label = '>>'
 
 category_menu = ReplyKeyboardMarkup()
-testFetchCategory = FetchCategory(category_urls)
-categ_list = testFetchCategory.get_category_list()
-for category in categ_list:
+fetchCategory = FetchCategory(category_urls)
+for category in fetchCategory.get_category_list():
     category_btn = KeyboardButton(category.name)
     category_menu.insert(category_btn)

@@ -12,6 +12,8 @@ class Category(object):
         self.slug = slug
         self.image = image
 
+
+
 class Product(object):
     def __init__(self, name, slug, price, category):
         self.name = name,
@@ -37,9 +39,9 @@ class FetchCategory(object):
             )
         return category_list
 
-    def get_products_to_category(self, value):
+    def get_products_to_category(self, category_slug):
         product_list = []
-        response = requests.get(url=self.urls['products_by_category']+value)
+        response = requests.get(url=self.urls['products_by_category'] + category_slug)
         result = response.json()
         for product in result['products_by_category']:
             product_list.append(
@@ -94,10 +96,9 @@ class FetchProduct(object):
         image_list = []
         response = requests.get(url=self.urls['product_images']+product_slug)
         result = response.json()
-        print(result)
         for image in result["images"]: 
             image_list.append(image)
-        print(len(image_list))
+        print(len(image_list))  
         return image_list
 
 
