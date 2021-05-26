@@ -4,4 +4,3 @@ class MyModelCounter(CounterBase):
     title = 'Продукты'
     def get_value(self, request):
         return Product.objects.count()
-        

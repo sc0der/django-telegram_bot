@@ -41,7 +41,7 @@ def create_new_product(request):
     serializer = ProductSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response({"satus":"ok","response": "Новый продукт успешно добавлен"})
+        return Response({"satus":"OK","response": "Новый продукт успешно добавлен"})
     print(serializer.data)
     return Response({"status":"error","response":"Ошибка при добавление нового продукта"})
 
@@ -126,10 +126,19 @@ def get_members(request):
 # Работа с заказамы и корзинам
 @api_view(['POST'])
 def post_cart_item(request):
+    # print(request.data)
+    # product_id = request.data['product']
+    cart = CartItem.objects.get(id=1)
+    print(cart.cart_set.all())
     serlzr = CartItemSerializer(data=request.data)
     if serlzr.is_valid():
         serlzr.save()
-        return Response({"ok": "Успешно добавлен"})
+        return Response(
+            {
+                "status": "OK",
+                "message": "Успешно добавлен"
+            }
+        )
     return Response({"error": "Не удалос добавить в корзину"})
 
 @api_view(['GET'])
@@ -143,11 +152,16 @@ def post_cart(request):
     serlzr = CartSerializer(data=request.data)
     if serlzr.is_valid():
         serlzr.save()
-        return Response({"ok": "Успешно добавлен"})
-    return Response({"error": "Не удалос добавить"})
+        return Response(
+            {
+                "status": "OK",
+                "message": "Успешно добавлен"
+            }
+        )
+    return Response({"error": "Не удалось добавить"})
 
 @api_view(['GET'])
-def get_cart_items(request, userID):
+def get_carts(request):
     cart = Cart.objects.all()
     serlzr = CartSerializer(cart, many=True)
     return Response({"cart": serlzr.data})
@@ -157,8 +171,13 @@ def post_order(request):
     serlzr = OrderSerializer(data=request.data)
     if serlzr.is_valid():
         serlzr.save()
-        return Response({"ok": "Ваш заказ успешно отправлен заказ"})
-    return Response({"error": "Не удалос отправить"})
+        return Response(
+            {
+                "status": "OK",
+                "message": "Ваш заказ успешно отправлен"
+            }
+        )
+    return Response({"error": "Не удалось отправить"})
 
 @api_view(['GET'])
 def get_order_item(request):

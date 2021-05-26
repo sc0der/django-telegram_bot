@@ -5,7 +5,8 @@ from rest_framework import routers
 from django.urls import path, include
 from big_shop.views import (
     create_new_product,
-    get_all_products, 
+    get_all_products,
+    get_carts, 
     get_product_by_id, 
     get_product_by_category_id,
     get_all_categories, 
@@ -15,7 +16,7 @@ from big_shop.views import (
     get_members, 
     get_cart_item,
     get_order_item,
-    get_cart_items,
+    get_carts,
     post_cart,
     post_cart_item,
     post_order
@@ -39,7 +40,7 @@ urlpatterns = [
     path('order/add', post_order),
     path('order/all', get_order_item),
     path('cart/add', post_cart),
-    path('cart_items/all', get_cart_items),
+    path('cart/all', get_carts),
     path('cart_item/add', post_cart_item),
     path('cart_item/<cItem_id>', get_cart_item),
 

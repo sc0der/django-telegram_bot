@@ -21,7 +21,7 @@ class ChartCounter(ModelCharts):
         {
             "label": "dataset 2",
             "fillColor": "rgba(151,187,205,0.2)",
-            "strokeColor": "rgba(151,187,205,1)",
+            "strokeColor": "rgba(151,187,205,1)",   
             "pointColor": "rgba(151,187,205,1)",
             "pointStrokeColor": "#fff",
             "pointHighlightFill": "#fff",

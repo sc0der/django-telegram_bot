@@ -1,9 +1,7 @@
+# from shop_telegram_bot import urls
 import requests
-from config import(
-    category_urls, 
-    members_urls, 
-    products_urls
-)
+from config import *
+
 from middleware import Middleware
 
 class Category(object):
@@ -115,9 +113,7 @@ class Member(object):
     def add_new_member(self):
         if Middleware(self.message).is_bot():
             return "you are a bot. You can not join this channel"
-            print("this is bot")
         else:
-            print("username: ", self.message.from_user.first_name)
             member = {
                 "id":1,
                 "memberID": self.message.from_user.id,
@@ -130,6 +126,31 @@ class Member(object):
             result = response.json()
             return result
 
+class CartItem(object):
+    
+    def __init__(self, urls):
+        self.urls = urls
+
+    def add_to_cart(self, p_id, qty, u_id):
+        data = {
+            "id": 1,
+            "qty": qty,
+            "product": p_id,
+            "user": u_id
+        }
+
+        response = requests.post(
+            url = self.urls['cart_item_add'],
+            json=data
+        )
+
+        print(response.status_code)
+        return response.status_code
+
+
+
+
+
 if __name__ == "__main__":
     testFetchCategory = FetchCategory(category_urls)
     categ_list = testFetchCategory.get_category_list()
@@ -137,6 +158,10 @@ if __name__ == "__main__":
     testProduct = FetchProduct(products_urls)
     pr1 = testProduct.get_product_list()
     pr2 = testProduct.get_photo_by_id(pr1[0].slug)
+
+    cartItem = CartItem(cart_items_urls)
+    cartItem.add_to_cart(1, 1, 1)
+
     print(pr2[0]['photo'])
 
 

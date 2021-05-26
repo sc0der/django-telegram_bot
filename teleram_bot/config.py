@@ -14,6 +14,20 @@ members_urls = {
     "member_list": host + 'member/all',
 }
 
+cart_urls = {
+    "cart_add": host + 'cart/add',
+    "cart_list": host + 'cart/all',
+}
+
+cart_items_urls = {
+    "cart_item_add": host + 'cart_item/add',
+    "cart_item": host + 'cart_item/', # + <cItem_id>
+}
+
+order_urls = {
+    "order_add": host + 'order/add',
+    "order_list": host + 'order/all' 
+}
 
 category_urls = {
     "category_list": host + 'category/all',

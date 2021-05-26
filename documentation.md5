@@ -1,0 +1,23 @@
+
+
+
+<--- add product to cart =-->
+    
+    post-> 
+    {
+        "id": 1,
+        "qty": 1,
+        "product": 1,
+        "user": 1
+    }
+
+    get ->
+    {
+        "cart_item": {
+            "id": 1,
+            "qty": 1,
+            "product": 1,
+            "user": 1
+        }
+    }
+
