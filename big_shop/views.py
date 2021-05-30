@@ -126,10 +126,6 @@ def get_members(request):
 # Работа с заказамы и корзинам
 @api_view(['POST'])
 def post_cart_item(request):
-    # print(request.data)
-    # product_id = request.data['product']
-    cart = CartItem.objects.get(id=1)
-    print(cart.cart_set.all())
     serlzr = CartItemSerializer(data=request.data)
     if serlzr.is_valid():
         serlzr.save()

@@ -11,6 +11,11 @@ class Category(object):
         self.image = image
 
 
+class Photo(object):
+    def __init__(self, url):
+        self.url = url
+
+
 
 class Product(object):
     def __init__(self, name, slug, price, category):
@@ -94,9 +99,8 @@ class FetchProduct(object):
         image_list = []
         response = requests.get(url=self.urls['product_images']+product_slug)
         result = response.json()
-        for image in result["images"]: 
-            image_list.append(image)
-        print(len(image_list))  
+        for image in result["images"]:
+            image_list.append(Photo(url=host+image["photo"]))
         return image_list
 
 
