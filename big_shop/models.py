@@ -12,8 +12,6 @@ def slug_generator():
   code = get_random_string(30, allowed_chars=string.ascii_uppercase + string.digits)
   return code
 
-
-
 class Category(models.Model):
     category_name = models.CharField(max_length=100, verbose_name="Категория")
     category_slug = models.SlugField(
@@ -33,6 +31,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = ('Категория')
         verbose_name_plural = ('Категории')
+
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100, verbose_name="Продукт")
@@ -56,7 +55,7 @@ class Product(models.Model):
         verbose_name_plural = ('Продукты')
 
 class Product_photo(models.Model):
-    def product_photo_location(self, filename):
+    def product_photo_location(self):
         return 'photo_archive/products/{}'.format(self.product.product_slug+".png")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to=product_photo_location)
@@ -80,7 +79,6 @@ class Product_photo(models.Model):
 class Members(models.Model):
     memberID = models.CharField(max_length=150, verbose_name="ID-участника")
     mName = models.CharField(max_length=50, verbose_name="USERNAME-участника")
-    # banned = models.BooleanField(default=False, verbose_name="Участник забанен")
 
     def __str__(self):
         return self.mName
@@ -131,3 +129,23 @@ class Order(models.Model):
     class Meta:
         verbose_name = ('Заказ')
         verbose_name_plural = ('Заказы')
+
+class Descriptions(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Заголовка")
+    body = models.TextField(verbose_name="Описание")
+    slug = models.SlugField(
+        default='',
+        editable=False,
+    )
+
+    def save(self, *args, **kwargs):
+        value = self.title
+        self.slug = translate_slug(value)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = ('Сообщение')
+        verbose_name_plural = ('Сообщения')

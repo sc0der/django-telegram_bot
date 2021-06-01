@@ -10,9 +10,9 @@ from main import FetchCategory
 from config import *
 
 menu_markup = ReplyKeyboardMarkup(resize_keyboard=True)
-button1 = KeyboardButton('Меню')
-button2 = KeyboardButton('О нас')
-button3 = KeyboardButton('Помощь')
+button1 = KeyboardButton('Меню 🏘')
+button2 = KeyboardButton('О нас ℹ')
+button3 = KeyboardButton('Помощь ❓')
 menu_markup.row(button1)
 menu_markup.row(button2)
 menu_markup.row(button3)

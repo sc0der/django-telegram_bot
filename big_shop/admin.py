@@ -7,7 +7,8 @@ from .models import (
     Members,
     CartItem, 
     Cart,
-    Order
+    Order,
+    Descriptions
 )
 
 # unregister non-used models
@@ -22,3 +23,4 @@ admin.site.register(Members)
 admin.site.register(CartItem)
 admin.site.register(Cart)
 admin.site.register(Order)
+admin.site.register(Descriptions)

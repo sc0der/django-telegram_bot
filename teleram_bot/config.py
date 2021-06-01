@@ -35,6 +35,11 @@ category_urls = {
     "products_by_category": host + 'products/category/' # + <category_slug>
 }
 
+message_urls = {
+    "messages" : host+"messages/all",
+    "message" : host+"messages/detail"
+}
+
 
 character_pages = [
     '*Harry*\nHarry Potter is the Boy Who Lived, the Chosen One, the hero of the Wizarding world. He grew up with Muggles, and then came to Hogwarts where he faced dangers and terrors beyond his years. He, along with his friends Hermione Granger, Ron Weasley and Neville Longbottom, destroyed Voldemort’s Horcruxes. Harry faced Voldemort at the end of a climactic battle in Hogwarts castle and defeated him.',

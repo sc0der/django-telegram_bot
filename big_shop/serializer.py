@@ -6,7 +6,8 @@ from .models import (
     Members,
     Cart, 
     CartItem, 
-    Order
+    Order,
+    Descriptions
 )
 
 # Сериализаторы 
@@ -46,4 +47,11 @@ class CartItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
+        fields = '__all__'
+
+
+
+class DescriptionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Descriptions
         fields = '__all__'

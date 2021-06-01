@@ -19,7 +19,9 @@ from big_shop.views import (
     get_carts,
     post_cart,
     post_cart_item,
-    post_order
+    post_order,
+    get_All_descr, 
+    get_descr_by_name
 )
 
 router = routers.DefaultRouter()
@@ -43,6 +45,8 @@ urlpatterns = [
     path('cart/all', get_carts),
     path('cart_item/add', post_cart_item),
     path('cart_item/<cItem_id>', get_cart_item),
+    path('messages/all', get_All_descr),
+    path('messages/detail', get_descr_by_name),
 
 ]
 

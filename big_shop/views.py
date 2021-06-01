@@ -10,7 +10,11 @@ from .models import (
     Category, 
     Product,
     Product_photo, 
-    Members, Cart, CartItem, Order
+    Members, 
+    Cart, 
+    CartItem, 
+    Order,
+    Descriptions
 )
 from .serializer import (
     ProductSerializer, 
@@ -19,7 +23,8 @@ from .serializer import (
     MemberSerializer, 
     CartItemSerializer, 
     CartSerializer, 
-    OrderSerializer
+    OrderSerializer,
+    DescriptionsSerializer
 )
 
 
@@ -85,7 +90,6 @@ def get_category_by_id(request, slug):
     return Response(serializer.data)
 
 # api of Members
-
 # add new member if not exists
 @api_view(['POST'])
 def add_new_member(request):
@@ -181,3 +185,16 @@ def get_order_item(request):
     serlzr = OrderSerializer(order, many=True)
     return Response({"order": serlzr.data})
 
+@api_view(['GET'])
+def get_All_descr(request):
+    order = Descriptions.objects.all()
+    serlzr = DescriptionsSerializer(order, many=True)
+    return Response({"messages": serlzr.data})
+
+
+@api_view(['GET', 'POST'])
+def get_descr_by_name(request):
+    value = request.data['slug']
+    order = Descriptions.objects.filter(slug=value)
+    serlzr = DescriptionsSerializer(order, many=True)
+    return Response({"messages": serlzr.data})

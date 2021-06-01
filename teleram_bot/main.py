@@ -15,8 +15,6 @@ class Photo(object):
     def __init__(self, url):
         self.url = url
 
-
-
 class Product(object):
     def __init__(self, name, slug, price, category):
         self.name = name,
@@ -147,11 +145,26 @@ class CartItem(object):
             url = self.urls['cart_item_add'],
             json=data
         )
-
-        print(response.status_code)
         return response.status_code
 
 
+class Message(object):
+    
+    def __init__(self, urls):
+        self.urls = urls
+
+    def get_message(self, value):
+        data = {
+            "slug": value
+        }
+        response = requests.post(
+            url = self.urls['message'],
+            json=data
+        )
+        result = response.json()
+        for msg in result["messages"]:
+           return  msg['body']
+        # return result['body']
 
 
 
@@ -162,7 +175,6 @@ if __name__ == "__main__":
     testProduct = FetchProduct(products_urls)
     pr1 = testProduct.get_product_list()
     pr2 = testProduct.get_photo_by_id(pr1[0].slug)
-
     cartItem = CartItem(cart_items_urls)
     cartItem.add_to_cart(1, 1, 1)
 
