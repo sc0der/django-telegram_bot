@@ -16,11 +16,12 @@ class Photo(object):
         self.url = url
 
 class Product(object):
-    def __init__(self, name, slug, price, category):
-        self.name = name,
+    def __init__(self, name, slug, price, category, id):
+        self.name = name
         self.slug = slug
         self.price = price
         self.category = category
+        self.id = id
        
 class FetchCategory(object):
     def __init__(self, urls):
@@ -51,6 +52,7 @@ class FetchCategory(object):
                     slug = product['product_slug'], 
                     price = product['price'], 
                     category = product['category_id'], 
+                    id= product['id']
                 )
             )
         return product_list
@@ -98,7 +100,8 @@ class FetchProduct(object):
         response = requests.get(url=self.urls['product_images']+product_slug)
         result = response.json()
         for image in result["images"]:
-            image_list.append(Photo(url=host+image["photo"]))
+            print(image["photo_link"])
+            image_list.append(Photo(url=image["photo_link"]))
         return image_list
 
 
@@ -129,7 +132,6 @@ class Member(object):
             return result
 
 class CartItem(object):
-    
     def __init__(self, urls):
         self.urls = urls
 
@@ -165,7 +167,6 @@ class Message(object):
         for msg in result["messages"]:
            return  msg['body']
         # return result['body']
-
 
 
 if __name__ == "__main__":

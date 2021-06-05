@@ -9,6 +9,10 @@ from telegram_bot_pagination import InlineKeyboardPaginator
 from main import FetchCategory
 from config import *
 
+
+addToCartBtn = InlineKeyboardButton('Добавить в корзину!', callback_data='ADD_TO_CART')
+cartKeyBoard = InlineKeyboardMarkup().add(addToCartBtn)
+
 menu_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 button1 = KeyboardButton('Меню 🏘')
 button2 = KeyboardButton('О нас ℹ')
