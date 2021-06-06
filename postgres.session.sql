@@ -1,1 +1,2 @@
-SELECT * FROM big_shop_product_photo;
+SELECT * FROM big_shop_cart_items;
+ 

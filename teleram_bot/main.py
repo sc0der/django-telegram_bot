@@ -16,10 +16,11 @@ class Photo(object):
         self.url = url
 
 class Product(object):
-    def __init__(self, name, slug, price, category, id):
+    def __init__(self, name, description, slug, price, category, id):
         self.name = name
         self.slug = slug
         self.price = price
+        self.description=description,
         self.category = category
         self.id = id
        
@@ -52,6 +53,7 @@ class FetchCategory(object):
                     slug = product['product_slug'], 
                     price = product['price'], 
                     category = product['category_id'], 
+                    description= product['description'], 
                     id= product['id']
                 )
             )
@@ -81,6 +83,7 @@ class FetchProduct(object):
                     slug = product['product_slug'], 
                     price = product['price'], 
                     category = product['category_id'], 
+                    description= product['description'], 
                 )
             )
         return product_list
@@ -93,6 +96,7 @@ class FetchProduct(object):
             slug = product['product_slug'], 
             price = product['price'], 
             category = product['category_id'], 
+            description= product['description'], 
         )
 
     def get_photo_by_id(self, product_slug):

@@ -22,9 +22,18 @@ menu_markup.row(button2)
 menu_markup.row(button3)
 
 remoteKeyBoard = ReplyKeyboardRemove()
-
-category_menu = ReplyKeyboardMarkup()
+category_menu = ReplyKeyboardMarkup(resize_keyboard=True)
 fetchCategory = FetchCategory(category_urls)
 for category in fetchCategory.get_category_list():
     category_btn = KeyboardButton(category.name)
-    category_menu.insert(category_btn)
+    category_menu.add(category_btn)
+cartKb = KeyboardButton("Корзина 🗑")    
+category_menu.add(cartKb)
+
+
+
+# paginator
+class KbPaginator(object):
+    
+    def __init__(self):
+        pass
