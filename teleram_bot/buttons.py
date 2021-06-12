@@ -35,5 +35,10 @@ category_menu.add(cartKb)
 # paginator
 class KbPaginator(object):
     
-    def __init__(self):
-        pass
+    def __init__(self, objects):
+        self.objects = objects
+
+    def buil_kb(self):
+        inline_markup = InlineKeyboardMarkup()
+        for kb in range(len(self.objects)):
+            inline_markup.add(InlineKeyboardButton(f'{kb}', callback_data=f'{kb}'))

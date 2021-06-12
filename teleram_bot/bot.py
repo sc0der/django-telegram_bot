@@ -65,7 +65,7 @@ async def deleteMessage(call):
     )
 async def refreshData(v_key):
     products = fetchCategory.get_products_to_category(
-            v_key
+            v_key 
     )
 
     @dp.callback_query_handler(lambda call: call.data.split('#')[0]=='character')
