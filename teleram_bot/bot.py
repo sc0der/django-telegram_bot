@@ -10,6 +10,7 @@ from aiogram.types.input_media import InputMediaPhoto, InputMediaVideo
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 global products
+global g_key
 # init categories   
 fetchCategory = FetchCategory(category_urls)
 fetchProduct = FetchProduct(products_urls)
@@ -25,29 +26,14 @@ async def process_start_command(message: types.Message):
 async def process_start_command(message: types.Message):
     await message.reply(message.text[1:], reply_markup=kb.category_menu)
 
-global g_key
-
-# getting data from product list by index
-# async def send_character_page(pages, message, page=1):
-#     paginator = InlineKeyboardPaginator(pages, current_page=page, data_pattern='character#{page}')
-#     await bot.send_message(message.chat.id, text=".", reply_markup=paginator.markup, parse_mode='Markdown')
-
-# sending product in replay
-# async def sendProductInfo(products, userID, page=1):    
-#     pictures = fetchProduct.get_photo_by_id(products[page-1].slug)
-#     photos = [item.url for item in pictures ]
-#     # print("checking")
-#     print("checking:", products[0].name)
-#     description = f'''Навзвание: {products[page-1].name} \nЦена: {products[page-1].price}'''
-#     await bot.send_photo(userID, photos[0], description, reply_markup=kb.cartKeyBoard,  parse_mode='Markdown', )
 
 async def send_character_page(products, userID, page=1):
     pictures = fetchProduct.get_photo_by_id(products[page-1].slug)
-    photos = [item.url for item in pictures ]
+    photos = [InputMediaPhoto(item.url) for item in pictures ]
     paginator = InlineKeyboardPaginator(len(products), current_page=page, data_pattern='character#{page}')
-    description = f'''Навзвание: {products[page-1].name} \nЦена: {products[page-1].price} \nОписание: {products[page-1].description} "/добавить" в корзину'''
-    await bot.send_photo(userID, photos[0], description, reply_markup=paginator.markup, parse_mode='Markdown')
-        # await bot.send_message(message.chat.id, text=".", reply_markup=paginator.markup, parse_mode='Markdown')
+    description = f'''*НАЗВАНИЕ*: {products[page-1].name} \n*ЦЕНА*: {products[page-1].price} \n*ОПИСАНИЕ*: {products[page-1].description} "/добавить" в корзину'''
+    await bot.send_media_group(userID, photos)
+    await bot.send_message(userID, description, reply_markup=paginator.markup, parse_mode='Markdown')
 
 async def process_callback_button(callback_query: types.CallbackQuery, products, page):
     cart_item = addToCart.add_to_cart(products[page-1].id, 1, 1)
@@ -63,6 +49,7 @@ async def deleteMessage(call):
         call.message.chat.id,
         call.message.message_id,
     )
+
 async def refreshData(v_key):
     products = fetchCategory.get_products_to_category(
             v_key 
@@ -72,9 +59,7 @@ async def refreshData(v_key):
     async def characters_page_callback(call):
         page = int(call.data.split('#')[1])
         print("testing page:", page)
-        print(call)
         await deleteMessage(call=call)
-        # await sendProductInfo(products, call.message.messa, page)
         await send_character_page(products, call.from_user.id, page)
 
 @dp.message_handler()
@@ -86,14 +71,9 @@ async def process_start_command(message: types.Message):
         products = fetchCategory.get_products_to_category(
             category_dict[g_key]
         )
-        print("before: ", len(products))
-        print("testing:", g_key)
         if len(products) > 0:
             await refreshData(v_key=category_dict[g_key])
-            print("g_key: ", g_key)
             await send_character_page(products, message.from_user.id, )
-            # await sendProductInfo(products, message.from_user.id)
-            # await send_character_page(len(products), message)
         else:
             media = [InputMediaVideo("https://media2.giphy.com/media/14uQ3cOFteDaU/giphy.gif?cid=ecf05e475zqy5gchpw4cgmmoaxoo53hfpbd4mts9i5k4dw06&rid=giphy.gif&ct=g", 'ёжик и котятки')]
             await bot.send_media_group(message.from_user.id, media)

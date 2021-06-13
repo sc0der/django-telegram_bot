@@ -34,11 +34,25 @@ category_menu.add(cartKb)
 
 # paginator
 class KbPaginator(object):
-    
-    def __init__(self, objects):
+    _keyboard_before = None
+    _keyboard = None
+    _keyboard_after = None
+
+    first_page_label = '« {}'
+    previous_page_label = '‹ {}'
+    next_page_label = '{} ›'
+    last_page_label = '{} »'
+    current_page_label = '·{}·'
+
+    def __init__(self, objects, current_page=1, data_pattern='{page}'):
         self.objects = objects
 
-    def buil_kb(self):
+    @property
+    def markup(self):
         inline_markup = InlineKeyboardMarkup()
         for kb in range(len(self.objects)):
-            inline_markup.add(InlineKeyboardButton(f'{kb}', callback_data=f'{kb}'))
+            print("kb: ", kb)
+            inline_markup.insert(InlineKeyboardButton(f'{kb + 1}', callback_data=f'{kb}'))
+        return inline_markup
+
+    
