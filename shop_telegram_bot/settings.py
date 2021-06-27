@@ -63,13 +63,15 @@ WSGI_APPLICATION = 'shop_telegram_bot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'big_shop', 
+        'NAME': 'bigshop', 
         'USER': 'postgres', 
         'PASSWORD': 'sc0der',
         'HOST': '127.0.0.1', 
         'PORT': '5432',
     }
 }
+
+
 
 
 # Password validation
@@ -126,12 +128,12 @@ VALI_CONFIG = {
             'site_name': "'Большой'- Бот",
             'url_image_profile': 'https://avatars.githubusercontent.com/u/44986984?v=4'
         },
-        # 'fieldset': {
-        #     'fields': ['user_permissions', 'permissions']
-        # },
-        # 'applist': {
-        #     'order': "registry", "group": False
-        # }
+        'fieldset': {
+            'fields': ['user_permissions', 'permissions']
+        },
+        'applist': {
+            'order': "registry", "group": False
+        }
     }  
 
 ADMIN_SHORTCUTS = [
@@ -166,7 +168,7 @@ ADMIN_SHORTCUTS = [
 ]
 
 ADMIN_SHORTCUTS_SETTINGS = {
-    'show_on_all_pages': False,
-    'hide_app_list': False,
-    'open_new_window': False,
+    'show_on_all_pages': True,
+    'hide_app_list': True,
+    'open_new_window': True,
 }

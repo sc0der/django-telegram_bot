@@ -1,3 +1,4 @@
 photo_archive
 big_shop/migrations
 django_env
+telegram_bot/config.py
