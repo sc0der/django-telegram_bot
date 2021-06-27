@@ -27,17 +27,17 @@ async def process_start_command(message: types.Message):
     await message.reply(message.text[1:], reply_markup=kb.category_menu)
 
 
+
 async def send_character_page(products, userID, category_name, page=1, ):
     pictures = fetchProduct.get_photo_by_id(products[page-1].slug)
-    # current_slug = products[page-1].slug
-    print("currnet slug: ", category_name)
     photos = [InputMediaPhoto(item.url) for item in pictures ]
     paginator = InlineKeyboardPaginator(len(products), current_page=page, data_pattern='character#{page}#'+category_name)
     description = f'''*НАЗВАНИЕ*: {products[page-1].name} \n*ЦЕНА*: {products[page-1].price} \n*ОПИСАНИЕ*: {products[page-1].description} "/добавить" в корзину'''
+    
     await bot.send_media_group(userID, photos)
     await bot.send_message(userID, description, reply_markup=paginator.markup, parse_mode='Markdown')
 
-async def process_callback_button(callback_query: types.CallbackQuery, products, page):
+async def process_callback_button(callback_query: types.CallbackQuery, products, page, ):
     cart_item = addToCart.add_to_cart(products[page-1].id, 1, 1)
     if cart_item == 200:
         await bot.answer_callback_query(callback_query.id,text='Успешно добавлен в корзину', show_alert=True)
@@ -46,28 +46,29 @@ async def process_callback_button(callback_query: types.CallbackQuery, products,
     await bot.answer_callback_query(callback_query.id)
 
 
+# @dp.message_handler(commands=['add_to_cart'])
+# async def say_test(message:Message):
+#     arguments = message.get_args()
+    
+#     await message.reply("test")
 
 async def deleteMessage(call):
-    await bot.delete_message(
-        call.message.chat.id,
-        call.message.message_id,
-    )
+    # await bot.delete_chat_photo(call.message.chat.id, call)
+    print("call")
+    print(call)
+    await bot.delete_message(call.message.chat.id,call.message.message_id)
 
-async def refreshData(v_key):
-    products = fetchCategory.get_products_to_category(
-            v_key 
-    )
+# async def refreshData(v_key):
+#     products = fetchCategory.get_products_to_category(
+#             v_key 
+#     )
 
 @dp.callback_query_handler(lambda call: call.data.split('#')[0]=='character')
 async def characters_page_callback(call):
     print("current_page: ", call.data.split('#'))
     current_slug = str(call.data.split('#')[2])
-
     products = fetchCategory.get_products_to_category(current_slug)
-
-    print(current_slug)
     page = int(call.data.split('#')[1])
-    print("here I am")  
     await deleteMessage(call=call)
     await send_character_page(products, call.from_user.id, category_name=current_slug, page=page)
 
@@ -81,7 +82,7 @@ async def process_start_command(message: types.Message):
             category_dict[g_key]
         )
         if len(products) > 0:
-            await refreshData(v_key=category_dict[g_key])
+            # await refreshData(v_key=category_dict[g_key])
             await send_character_page(products, message.from_user.id, category_dict[g_key] )
         else:
             media = [InputMediaVideo("https://media2.giphy.com/media/14uQ3cOFteDaU/giphy.gif?cid=ecf05e475zqy5gchpw4cgmmoaxoo53hfpbd4mts9i5k4dw06&rid=giphy.gif&ct=g", 'ёжик и котятки')]
