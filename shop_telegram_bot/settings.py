@@ -2,7 +2,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = ''
+SECRET_KEY = 'asdasdasd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -20,10 +20,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "graphene_django",
     'big_shop',
     'rest_framework',
     'corsheaders'
 ]
+
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -37,6 +40,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'shop_telegram_bot.urls'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+# GRAPHENE = {
+#     "SCHEMA": "big_shop.schema"
+# }
 
 TEMPLATES = [
     {

@@ -2,6 +2,8 @@ from django.conf import settings
 from django.conf.urls.static import	static
 from django.contrib import admin
 from rest_framework import routers
+from big_shop.schema import schema
+from graphene_django.views import GraphQLView
 from django.urls import path, include
 from big_shop.views import (
     create_new_product,
@@ -27,6 +29,7 @@ from big_shop.views import (
 router = routers.DefaultRouter()
 urlpatterns = [
     path('', include(router.urls)),
+    path("graphql", GraphQLView.as_view(graphiql=True, schema=schema)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
     path('vali/', include('vali.urls')),
